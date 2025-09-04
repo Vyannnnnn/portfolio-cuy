@@ -349,22 +349,29 @@ body.menu-open {
   display: none;
   flex-direction: column;
   cursor: pointer;
-  padding: 8px;
+  padding: 10px;
   border-radius: 4px;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .mobile-menu-toggle:hover {
-  background-color: rgba(0, 123, 255, 0.1);
+  background: rgba(102, 126, 234, 0.2);
+  transform: scale(1.05);
 }
 
 .mobile-menu-toggle span {
   width: 25px;
   height: 3px;
-  background-color: #333;
+  background-color: white;
   margin: 3px 0;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 2px;
+  display: block;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -873,6 +880,8 @@ section {
   margin-top: 40px;
   max-width: 100%;
   box-sizing: border-box;
+  position: relative;
+  z-index: 100;
 }
 
 .cta-button {
@@ -2792,8 +2801,10 @@ section {
     flex-direction: column;
     gap: 15px;
     margin-top: 30px;
-    max-height: 120px;
-    overflow: hidden;
+    margin-bottom: 20px;
+    overflow: visible;
+    z-index: 10;
+    position: relative;
   }
 
   .cta-button {
@@ -2938,7 +2949,8 @@ section {
 
 @media (max-width: 480px) {
   .container {
-    padding: 80px 10px 0px 10px;
+    padding: 0px 10px 0px 10px;
+    margin-top: 30px;
   }
 
   .navbar {
@@ -2962,22 +2974,43 @@ section {
   }
 
   .hero {
-    padding: 60px 0 40px;
+    padding: 60px 0 80px;
     min-height: 100vh;
-    overflow: hidden;
-    height: 100vh;
-    max-height: 100vh;
+    overflow: visible;
+    height: auto;
+    max-height: none;
     position: relative;
   }
 
   .hero-content {
     padding: 0 5px;
-    gap: 20px;
+    gap: 15px;
     max-width: 100%;
     margin: 0 auto;
-    overflow: hidden;
-    max-height: calc(100vh - 100px);
-    height: calc(100vh - 100px);
+    padding-top: 10px;
+    padding-bottom: 60px;
+    overflow: visible;
+    min-height: calc(100vh - 60px);
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .hero-cta {
+    margin-top: 15px;
+    margin-bottom: 25px;
+    z-index: 10;
+    position: relative;
+    flex-shrink: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+    display: flex;
+    min-height: 110px;
+    overflow: visible;
+    padding: 8px 0;
   }
 
   .terminal-window {
@@ -3020,15 +3053,17 @@ section {
     font-size: clamp(0.7rem, 5vw, 1rem);
     margin-bottom: 12px;
     line-height: 1.3;
-    max-height: 120px;
+    max-height: 130px;
     overflow: hidden;
   }
 
   .hero-main-content {
     order: 1;
     max-width: 100%;
-    overflow: hidden;
-    max-height: calc(100vh - 400px);
+    overflow: visible;
+    min-height: 500px;
+    height: auto;
+    padding-bottom: 30px;
   }
 
   .title-line {
@@ -3040,13 +3075,13 @@ section {
   .code-snippet {
     padding: 4px;
     font-size: 12px;
-    margin: 8px 0;
+    margin: 6px 0;
     overflow-x: hidden;
     white-space: pre-wrap;
     max-width: 100%;
     word-break: break-word;
     line-height: 1.2;
-    max-height: 170px;
+    max-height: 140px;
   }
 
   .code-snippet .comment {
@@ -3059,16 +3094,17 @@ section {
   .hero-stats {
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
-    margin: 12px 0;
+    margin: 8px 0;
     max-width: 100%;
     overflow: hidden;
     max-height: 80px;
+    /* border: 2px solid red; */
   }
 
   .stat-item {
-    padding: 4px 2px;
+    padding: 2px 2px;
     min-height: auto;
-    max-height: 60px;
+    max-height: 80px;
     display: block;
     text-align: center;
     overflow: hidden;
@@ -3076,14 +3112,15 @@ section {
   }
 
   .stat-number {
-    font-size: 1rem;
+    font-size: 0.4rem;
+    margin-top: 0;
     margin-bottom: 1px;
     line-height: 1;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .stat-label {
-    font-size: 0.55rem;
+    font-size: 0.2rem;
     margin-top: 0;
     line-height: 1;
   }
@@ -3094,9 +3131,35 @@ section {
   }
 
   .cta-button {
-    padding: 16px 20px;
-    font-size: 15px;
-    min-height: 50px;
+    padding: 14px 18px;
+    font-size: 14px;
+    min-height: 46px;
+    position: relative;
+    z-index: 100;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    visibility: visible;
+    border-radius: 6px;
+  }
+
+  .cta-button.secondary {
+    background: rgba(0, 255, 255, 0.1);
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    backdrop-filter: blur(10px);
+  }
+
+  .cta-button.primary {
+    background: linear-gradient(135deg, #00ffff, #0080ff);
+    color: #000;
+    font-weight: 600;
   }
 
   .floating-icons .tech-icon {

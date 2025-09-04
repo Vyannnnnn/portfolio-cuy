@@ -5,8 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize Page Loader
   initPageLoader();
 
-  // Initialize Mobile Menu
-  initMobileMenu();
+  // Mobile Menu handled by separate script
 
   // Initialize Smooth Scrolling
   initSmoothScrolling();
@@ -44,27 +43,6 @@ function initPageLoader() {
       setTimeout(() => {
         pageLoader.classList.add("loaded");
       }, 1000);
-    });
-  }
-}
-
-// Mobile Menu
-function initMobileMenu() {
-  const hamburger = document.querySelector(".hamburger");
-  const navLinks = document.querySelector(".nav-links");
-  const navItems = document.querySelectorAll(".nav-links li");
-
-  if (hamburger && navLinks) {
-    hamburger.addEventListener("click", () => {
-      navLinks.classList.toggle("active");
-      hamburger.classList.toggle("active");
-    });
-
-    navItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        navLinks.classList.remove("active");
-        hamburger.classList.remove("active");
-      });
     });
   }
 }

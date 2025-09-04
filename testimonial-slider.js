@@ -85,15 +85,11 @@
 
     if (!testimonialTrack || !testimonialCards.length) return;
 
-    console.log("Current testimonial index:", currentTestimonialIndex);
-    console.log("Total testimonial cards found:", testimonialCards.length);
-
     // Update active states for cards - hide all, show current
     testimonialCards.forEach((card, index) => {
       card.classList.remove("active");
       if (index === currentTestimonialIndex) {
         card.classList.add("active");
-        console.log("Activated card at index:", index);
       }
     });
 
