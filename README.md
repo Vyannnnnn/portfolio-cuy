@@ -1,6 +1,3 @@
-# Tamal Sen Portfolio Website Clone
-
-This is a clone of the portfolio website https://tamalsen.dev/ built with modern HTML, CSS, and JavaScript.
 
 ## Features
 
@@ -90,12 +87,9 @@ portfolio-claude/
 - Images are placeholder elements that can be replaced with actual project images
 - CSS animations use transform and opacity for smooth 60fps performance
 
-## License
 
-This is a portfolio template inspired by Tamal Sen's original design. Feel free to use it as a starting point for your own portfolio website.
 
 ## Credits
 
-- Original design inspiration: https://tamalsen.dev/
 - Icons: Font Awesome
 - Fonts: Google Fonts (Inter)
