@@ -9,10 +9,10 @@
   });
 
   function initTestimonialSlider() {
-    // Auto-play testimonials every 6 seconds
+    // Auto-play testimonials every 4 seconds
     setInterval(() => {
       changeTestimonial(1);
-    }, 6000);
+    }, 4000);
 
     // Add keyboard navigation
     document.addEventListener("keydown", (e) => {
