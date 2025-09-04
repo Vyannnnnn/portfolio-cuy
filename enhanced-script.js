@@ -47,28 +47,155 @@ function initPageLoader() {
   }
 }
 
-// Smooth Scrolling
+// Enhanced Smooth Scrolling with Animation
 function initSmoothScrolling() {
   const links = document.querySelectorAll('a[href^="#"]');
+  const navLinks = document.querySelectorAll(".nav-links a");
+  const scrollIndicator = document.querySelector(".nav-scroll-indicator");
+
+  // Add active state management for nav links
+  function updateActiveLink() {
+    const sections = document.querySelectorAll("section[id]");
+    const scrollPos = window.pageYOffset + 100;
+
+    sections.forEach((section) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+      const sectionId = section.getAttribute("id");
+
+      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${sectionId}`) {
+            link.classList.add("active");
+          }
+        });
+      }
+    });
+  }
+
+  // Custom smooth scroll with easing animation
+  function smoothScrollTo(target, duration = 1000) {
+    const headerOffset = 80;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+    const startPosition = window.pageYOffset;
+    const distance = offsetPosition - startPosition;
+    let startTime = null;
+
+    // Show scroll indicator
+    if (scrollIndicator) {
+      scrollIndicator.classList.add("active");
+    }
+
+    // Easing function for smooth animation
+    function easeInOutCubic(t) {
+      return t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
+    }
+
+    function animation(currentTime) {
+      if (startTime === null) startTime = currentTime;
+      const timeElapsed = currentTime - startTime;
+      const progress = Math.min(timeElapsed / duration, 1);
+      const ease = easeInOutCubic(progress);
+
+      window.scrollTo(0, startPosition + distance * ease);
+
+      if (timeElapsed < duration) {
+        requestAnimationFrame(animation);
+      } else {
+        // Hide scroll indicator when done
+        if (scrollIndicator) {
+          setTimeout(() => {
+            scrollIndicator.classList.remove("active");
+          }, 200);
+        }
+      }
+    }
+
+    requestAnimationFrame(animation);
+  }
 
   links.forEach((link) => {
     link.addEventListener("click", function (e) {
       e.preventDefault();
 
+      // Add visual feedback to clicked link
+      this.style.transform = "scale(0.95)";
+      this.classList.add("loading");
+
+      setTimeout(() => {
+        this.style.transform = "";
+        this.classList.remove("loading");
+      }, 150);
+
       const targetId = this.getAttribute("href");
       const targetSection = document.querySelector(targetId);
 
       if (targetSection) {
-        const headerOffset = 80;
-        const elementPosition = targetSection.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+        // Add smooth scrolling class to body
+        document.body.classList.add("smooth-scrolling");
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: "smooth",
+        smoothScrollTo(targetSection, 1000);
+
+        // Remove smooth scrolling class after animation
+        setTimeout(() => {
+          document.body.classList.remove("smooth-scrolling");
+          updateActiveLink();
+        }, 1000);
+      }
+    });
+
+    // Add hover effects for desktop
+    if (window.innerWidth > 768) {
+      link.addEventListener("mouseenter", function () {
+        this.style.transform = "translateY(-2px) scale(1.05)";
+      });
+
+      link.addEventListener("mouseleave", function () {
+        if (!this.classList.contains("active")) {
+          this.style.transform = "";
+        }
+      });
+    }
+  });
+
+  // Update active link on scroll with throttling
+  let scrollTimeout;
+  window.addEventListener("scroll", () => {
+    if (scrollTimeout) {
+      clearTimeout(scrollTimeout);
+    }
+    scrollTimeout = setTimeout(updateActiveLink, 10);
+  });
+
+  // Set initial active link
+  updateActiveLink();
+
+  // Add intersection observer for better performance
+  const observerOptions = {
+    root: null,
+    rootMargin: "-20% 0px -20% 0px",
+    threshold: 0,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const sectionId = entry.target.getAttribute("id");
+        navLinks.forEach((link) => {
+          link.classList.remove("active");
+          if (link.getAttribute("href") === `#${sectionId}`) {
+            link.classList.add("active");
+          }
         });
       }
     });
+  }, observerOptions);
+
+  // Observe all sections
+  document.querySelectorAll("section[id]").forEach((section) => {
+    observer.observe(section);
   });
 }
 
