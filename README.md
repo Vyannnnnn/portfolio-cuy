@@ -6,7 +6,7 @@ Sebuah template portfolio modern untuk developer dengan desain terminal-themed, 
 
 ## 🎯 Demo
 
-[Live Demo](https://your-demo-link.com) | [Video Tutorial](https://your-video-link.com)
+[Live Demo](https://vyannnnnn.github.io/portfolio-cuy/)
 
 ## ✨ Fitur Utama
 
